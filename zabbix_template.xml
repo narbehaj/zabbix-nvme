@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.0</version>
+    <date>2020-11-11T14:36:14Z</date>
+    <groups>
+        <group>
+            <name>Templates</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <template>Template NVMe</template>
+            <name>Template NVMe</name>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <applications>
+                <application>
+                    <name>NVMe Disks</name>
+                </application>
+            </applications>
+            <discovery_rules>
+                <discovery_rule>
+                    <name>NVMe Disks List</name>
+                    <key>nvme.discovery</key>
+                    <delay>1h</delay>
+                    <lifetime>0</lifetime>
+                    <item_prototypes>
+                        <item_prototype>
+                            <name>NVMe {#NVMENAME} Health</name>
+                            <key>nvme.disk_health[&quot;{#NVMENAME}&quot;]</key>
+                            <delay>1h</delay>
+                            <history>10d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <applications>
+                                <application>
+                                    <name>NVMe Disks</name>
+                                </application>
+                            </applications>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <expression>{last()}&gt;=80</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>{last()}&lt;=80</recovery_expression>
+                                    <name>{HOST.NAME} {#NVMENAME} wear level is {ITEM.VALUE}</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+        </template>
+    </templates>
+</zabbix_export>
