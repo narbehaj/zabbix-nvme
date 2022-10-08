@@ -7,8 +7,8 @@ import subprocess
 
 
 def get_nvme_list():
-    stdout = subprocess.check_output("sudo nvme list | grep '/dev/' | awk '{print $1}'", shell=True)
-    data_list = []
+    stdraw = subprocess.check_output("sudo nvme list | grep '/dev/' | awk '{print $1}'", shell=True)
+    stdout = stdraw.decode()
 
     for i in stdout.strip().split():
         data_list = [{"{#NVMENAME}": i} for i in stdout.strip().split()]
